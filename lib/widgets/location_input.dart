@@ -10,6 +10,7 @@ class LocationInput extends StatefulWidget {
 
 class _LocationInputState extends State<LocationInput> {
   String _previewImageUrl;
+  String _address = "fd";
 
   Future<void> getCurrentUserLocation() async {
     Location location = Location();
@@ -35,6 +36,8 @@ class _LocationInputState extends State<LocationInput> {
     }
 
     _locationData = await location.getLocation();
+    final address = await LocationHelper.getPlaceAddress(
+        _locationData.latitude.toString(), _locationData.longitude.toString());
     print(
         "Latitude: ${_locationData.latitude}, Longitude: ${_locationData.longitude}");
     setState(() {
@@ -42,6 +45,7 @@ class _LocationInputState extends State<LocationInput> {
         latitude: _locationData.latitude.toString(),
         longitude: _locationData.longitude.toString(),
       );
+      _address = address;
     });
   }
 
@@ -68,23 +72,52 @@ class _LocationInputState extends State<LocationInput> {
                   fit: BoxFit.cover,
                 ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            FlatButton.icon(
-              onPressed: getCurrentUserLocation,
-              icon: Icon(Icons.location_on),
-              label: Text("Current Location"),
-              textColor: Theme.of(context).primaryColor,
-            ),
-            FlatButton.icon(
-              onPressed: () {},
-              icon: Icon(Icons.map),
-              label: Text("Select On Map"),
-              textColor: Theme.of(context).primaryColor,
-            )
-          ],
-        )
+        if (_address != null) ...[
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            children: [
+              Text(
+                "Address:",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                child: Text(
+                  _address,
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+        FlatButton.icon(
+          onPressed: getCurrentUserLocation,
+          icon: Icon(Icons.location_on),
+          label: Text("Get Current Location"),
+          textColor: Theme.of(context).primaryColor,
+        ),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   children: [
+
+        //     FlatButton.icon(
+        //       onPressed: () {},
+        //       icon: Icon(Icons.map),
+        //       label: Text("Select On Map"),
+        //       textColor: Theme.of(context).primaryColor,
+        //     )
+        //   ],
+        // )
       ],
     );
   }
