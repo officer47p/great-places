@@ -60,14 +60,18 @@ class PlaceDetailScreen extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(10),
-              child: Image.network(
-                LocationHelper.getStaticImageMapUrl(
-                  latitude: place.location.latitude,
-                  longitude: place.location.longitude,
+              child: GestureDetector(
+                onTap: () => LocationHelper.openMap(
+                    place.location.latitude, place.location.longitude),
+                child: Image.network(
+                  LocationHelper.getStaticImageMapUrl(
+                    latitude: place.location.latitude,
+                    longitude: place.location.longitude,
+                  ),
+                  height: 200,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
                 ),
-                height: 200,
-                width: double.infinity,
-                fit: BoxFit.cover,
               ),
             )
           ],

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 import '../credentials.dart';
 
@@ -24,5 +25,15 @@ class LocationHelper {
       aData['adminArea1']
     ].where((element) => (element as String).length > 0).toList();
     return addressList.join(" ,");
+  }
+
+  static Future<void> openMap(String latitude, String longitude) async {
+    String googleUrl =
+        'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+    if (await canLaunch(googleUrl)) {
+      await launch(googleUrl);
+    } else {
+      throw 'Could not open the map.';
+    }
   }
 }
