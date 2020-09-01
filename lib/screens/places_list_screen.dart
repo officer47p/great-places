@@ -3,6 +3,7 @@ import "package:provider/provider.dart";
 
 import '../providers/great_places.dart';
 import './add_place_screen.dart';
+import './place_detail_screen.dart';
 
 class PlacesListScreen extends StatelessWidget {
   @override
@@ -38,6 +39,9 @@ class PlacesListScreen extends StatelessWidget {
                         children: gp.items
                             .map(
                               (e) => ListTile(
+                                onTap: () => Navigator.of(context).pushNamed(
+                                    PlaceDetailScreen.routeName,
+                                    arguments: e.id),
                                 title: Text(e.title),
                                 subtitle: Text(
                                   e.location.address,

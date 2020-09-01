@@ -11,6 +11,10 @@ class GreatPlaces with ChangeNotifier {
     return [..._items];
   }
 
+  Place getPlaceById(String id) {
+    return _items.firstWhere((element) => element.id == id);
+  }
+
   void addPlace(
     String title,
     File image,
