@@ -39,6 +39,11 @@ class PlacesListScreen extends StatelessWidget {
                             .map(
                               (e) => ListTile(
                                 title: Text(e.title),
+                                subtitle: Text(
+                                  e.location.address,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.fade,
+                                ),
                                 leading: CircleAvatar(
                                   backgroundImage: FileImage(e.image),
                                 ),

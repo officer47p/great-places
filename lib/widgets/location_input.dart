@@ -4,13 +4,15 @@ import 'package:location/location.dart';
 import '../helpers/location_helper.dart';
 
 class LocationInput extends StatefulWidget {
+  LocationInput(this.onSubmit);
+  final Function onSubmit;
   @override
   _LocationInputState createState() => _LocationInputState();
 }
 
 class _LocationInputState extends State<LocationInput> {
   String _previewImageUrl;
-  String _address = "fd";
+  String _address;
 
   Future<void> getCurrentUserLocation() async {
     Location location = Location();
@@ -47,6 +49,10 @@ class _LocationInputState extends State<LocationInput> {
       );
       _address = address;
     });
+    widget.onSubmit(
+        lat: _locationData.latitude.toString(),
+        lng: _locationData.longitude.toString(),
+        address: address);
   }
 
   @override
